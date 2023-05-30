@@ -31,11 +31,12 @@ RUN apt-get update && apt-get install libpq-dev
 COPY Gemfile Gemfile.lock ./
 RUN gem install bundler && bundle install --jobs 20 --retry 5
 
-RUN gem install foreman
+RUN rails assets:clean assets:precompile
 
 # Copy the main application.
 COPY . ./
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+
 # Expose port 3000 to the Docker host, so we can access it
 # from the outside.
 EXPOSE 3000
