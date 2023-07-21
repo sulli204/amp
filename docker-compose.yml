@@ -29,3 +29,5 @@ services:
       interval: 2s
       timeout: 5s
       retries: 30
+
+# docker-compose run web rake db:migrate to run migrations

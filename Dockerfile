@@ -34,6 +34,7 @@ RUN gem install bundler && bundle install --jobs 20 --retry 5
 # Copy the main application.
 COPY . ./
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+
 # Expose port 3000 to the Docker host, so we can access it
 # from the outside.
 EXPOSE 3000
@@ -41,5 +42,7 @@ EXPOSE 3000
 # tell the Rails dev server to bind to all interfaces by
 # default.
 
-# CMD ["rails", "server", "-b", "0.0.0.0"]
+# Delete any server PIDs that were terminated
+RUN bash -c "rm -f tmp/pids/server.pid"
+
 CMD ["bin/dev"]
