@@ -21,8 +21,9 @@ class UsersController < ApplicationController
 
   # POST /users or /users.json
   def create
+    require 'pry'
     @user = User.new(user_params)
-
+    binding.pry
     if @user.save
       session[:user_id] = @user.id
       redirect_to root_path
