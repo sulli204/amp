@@ -1,11 +1,11 @@
 version: "3.8"
 services:
   web:
+    tty: true
     build:
       context: .
-    command: bash -c "rm -f tmp/pids/server.pid && rails server -p 3000 -b '0.0.0.0'"
     ports:
-      - "3000:3000"
+      - "5000:5000"
     volumes:
       - .:/rails
     environment:
@@ -14,7 +14,6 @@ services:
     depends_on:
       postgres-db:
         condition: service_healthy
-
 
   postgres-db:
     image: postgres
@@ -30,3 +29,5 @@ services:
       interval: 2s
       timeout: 5s
       retries: 30
+
+# docker-compose run web rake db:migrate to run migrations

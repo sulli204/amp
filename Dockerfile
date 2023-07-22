@@ -31,8 +31,6 @@ RUN apt-get update && apt-get install libpq-dev
 COPY Gemfile Gemfile.lock ./
 RUN gem install bundler && bundle install --jobs 20 --retry 5
 
-RUN rails assets:clean assets:precompile
-
 # Copy the main application.
 COPY . ./
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
@@ -44,4 +42,7 @@ EXPOSE 3000
 # tell the Rails dev server to bind to all interfaces by
 # default.
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# Delete any server PIDs that were terminated
+RUN bash -c "rm -f tmp/pids/server.pid"
+
+CMD ["bin/dev"]
