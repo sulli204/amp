@@ -4,45 +4,68 @@
 ARG RUBY_VERSION=3.2.2
 FROM ruby:$RUBY_VERSION-slim as base
 
-# Configure the main working directory. This is the base
-# directory used in any further RUN, COPY, and ENTRYPOINT
-# commands.
+LABEL fly_launch_runtime="rails"
+
 # Rails app lives here
-RUN mkdir -p /rails
 WORKDIR /rails
 
-# Install apt based dependencies required to run Rails as
-# well as RubyGems. As the Ruby image itself is based on a
-# Debian image, we use apt-get to install those.
-RUN apt-get update && apt-get install -y \
-  build-essential \
-  nodejs
+# Set production environment
+ENV RAILS_ENV="production" \
+    BUNDLE_WITHOUT="development:test" \
+    BUNDLE_DEPLOYMENT="1"
 
+# Update gems and bundler
+RUN gem update --system --no-document && \
+    gem install -N bundler
+
+
+# Throw-away build stage to reduce size of final image
+FROM base as build
+
+# Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y postgresql-client && \
+    apt-get install --no-install-recommends -y build-essential libpq-dev
+
+# Install application gems
+COPY --link Gemfile Gemfile.lock ./
+RUN bundle install && \
+    bundle exec bootsnap precompile --gemfile && \
+    rm -rf ~/.bundle/ $BUNDLE_PATH/ruby/*/cache $BUNDLE_PATH/ruby/*/bundler/gems/*/.git
+
+# Copy application code
+COPY --link . .
+
+# Precompile bootsnap code for faster boot times
+RUN bundle exec bootsnap precompile app/ lib/
+
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
+
+
+# Final stage for app image
+FROM base
+
+# Install packages needed for deployment
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-RUN apt-get update && apt-get install libpq-dev
+# Copy built artifacts: gems, application
+COPY --from=build /usr/local/bundle /usr/local/bundle
+COPY --from=build /rails /rails
 
-# Copy the Gemfile as well as the Gemfile.lock and install
-# the RubyGems. This is a separate step so the dependencies
-# will be cached unless changes to one of those two files
-# are made.
-COPY Gemfile Gemfile.lock ./
-RUN gem install bundler && bundle install --jobs 20 --retry 5
+# Run and own only the runtime files as a non-root user for security
+RUN useradd rails --create-home --shell /bin/bash && \
+    chown -R rails:rails db log storage tmp
+USER rails:rails
 
-# Copy the main application.
-COPY . ./
+# Deployment options
+ENV RAILS_LOG_TO_STDOUT="1" \
+    RAILS_SERVE_STATIC_FILES="true"
+
+# Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-# Expose port 3000 to the Docker host, so we can access it
-# from the outside.
+# Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-# The main command to run when the container starts. Also
-# tell the Rails dev server to bind to all interfaces by
-# default.
-
-# Delete any server PIDs that were terminated
-RUN bash -c "rm -f tmp/pids/server.pid"
-
-CMD ["bin/dev"]
+CMD ["./bin/rails", "server"]

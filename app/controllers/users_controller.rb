@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-  skip_before_action :authorized, only: %i[ new ]
+  skip_before_action :authorized, only: %i[ new create ]
 
   # GET /users or /users.json
   def index
@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = User.new
+    @user = User.new(user_params)
   end
 
   # GET /users/1/edit
