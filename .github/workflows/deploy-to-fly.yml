@@ -1,15 +1,30 @@
-name: Fly Deploy
+name: CI
 on:
   push:
     branches:
       - main
 
 jobs:
+  test:
+    name: Run Ruby Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
+        with:
+          ruby-version: '3.2.2'
+      - name: Install Dependencies
+        run: bundle install
+      - name: Run Tests
+        run: bundle exec rake
+
   deploy:
+    needs: test
     name: Deploy to Fly
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
