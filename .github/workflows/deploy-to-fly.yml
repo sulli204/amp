@@ -37,7 +37,7 @@ jobs:
       - name: Install Dependencies
         run: bundle install
       - name: Prepare Database
-        run: rake db:test:prepare
+        run: bundle exec rake db:test:prepare
       - name: Run Tests
         run: bundle exec rake test
 
