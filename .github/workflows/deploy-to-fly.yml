@@ -9,6 +9,8 @@ jobs:
     name: Run Ruby Tests
     runs-on: ubuntu-latest
     steps:
+      env:
+        RAILS_ENV: test
       - uses: actions/checkout@v4
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -16,6 +18,8 @@ jobs:
           ruby-version: '3.2.2'
       - name: Install Dependencies
         run: bundle install
+      - name: Prepare Database
+        run: rake db:prepare
       - name: Run Tests
         run: bundle exec rake
 
