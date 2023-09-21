@@ -4,9 +4,28 @@ on:
     branches:
       - main
 
+services:
+  postgres:
+    env:
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    image: postgres
+    ports:
+    - 5432:5432
+    options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+
 jobs:
   test:
     name: Run Ruby Tests
+    env:
+      PG_DATABASE: postgres
+      PG_HOST: localhost
+      PG_PORT: 5432
+      PG_USER: postgres
+      PG_PASSWORD: postgres
+      RAILS_ENV: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,8 +39,7 @@ jobs:
         run: rake db:prepare
       - name: Run Tests
         run: bundle exec rake
-        env:
-          RAILS_ENV: test
+
 
   deploy:
     needs: test
