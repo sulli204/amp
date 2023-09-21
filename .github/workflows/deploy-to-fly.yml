@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PG_DATABASE: postgres
+      PG_DATABASE: amp_test
       PG_HOST: localhost
       PG_PORT: 5432
       PG_USER: postgres
@@ -37,9 +37,9 @@ jobs:
       - name: Install Dependencies
         run: bundle install
       - name: Prepare Database
-        run: rake db:prepare
+        run: rake db:test:prepare
       - name: Run Tests
-        run: bundle exec rake
+        run: bundle exec rake test
 
 
   deploy:
