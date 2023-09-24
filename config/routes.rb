@@ -8,4 +8,8 @@ Rails.application.routes.draw do
 
   get "sign_up", to: "users#new"
   post "sign_up", to: "users#create"
+
+  get "upload", to: "songs#new"
+  post "upload", to: "songs#create"
+  get "songs", to: "songs#index"
 end
