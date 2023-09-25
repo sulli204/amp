@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   get "upload", to: "songs#new"
   post "upload", to: "songs#create"
   get "songs", to: "songs#index"
+  get "collection/:profile_page", to: "songs#collection", as: "collection"
 end

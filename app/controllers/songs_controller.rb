@@ -1,14 +1,25 @@
 require "aws-sdk-s3"
 
 class SongsController < ApplicationController
-  def index;
+  def index;# feed page
   end
 
   def new
     @song = Song.new
   end
 
+  # current_user's page
+  def collection
+    @user = User.where(profile_page: params[:profile_page]).first
+    @songs = Song.where(user_id: @user.id)
+  end
+
   def create
+    if !params[:song][:file_path].content_type.include?("audio")
+      flash[:alert] = "Please upload an audio file"
+      return
+    end
+
     response = upload(params[:song][:file_path], params[:song][:name])
     if response.successful?
       params[:song][:file_path] = create_file_path(params[:song][:name])
