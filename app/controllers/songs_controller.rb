@@ -1,5 +1,6 @@
+require "aws-sdk-s3"
+
 class SongsController < ApplicationController
-  require 'r2_client.rb'
   def index;
   end
 
@@ -8,9 +9,17 @@ class SongsController < ApplicationController
   end
 
   def create
-    response = R2Client.upload(params[:song][:file], params[:song][:name])
+    response = upload(params[:song][:file_path], params[:song][:name])
     if response.successful?
-      # create the song record
+      params[:song][:file_path] = create_file_path(params[:song][:name])
+      @song = Song.new(song_params)
+
+      if @song.save
+        flash[:notice] = "Song #{params[:song][:name]} has been uploaded!"
+        redirect_to root_path
+      else
+        render :new
+      end
     else
       render :new
     end
@@ -19,6 +28,31 @@ class SongsController < ApplicationController
 
   private
   def song_params
-    params.require(:song).permit(:file, :name)
+    params.require(:song).permit(:file_path, :name, :user_id)
+  end
+
+  R2_ENDPOINT = "https://#{Rails.application.credentials.dig(:cloudflare, :account_id)}.r2.cloudflarestorage.com".freeze
+
+  def s3_client
+    Aws::S3::Client.new(
+      access_key_id: Rails.application.credentials.dig(:cloudflare, :access_key_id),
+      secret_access_key: Rails.application.credentials.dig(:cloudflare, :secret_access_key),
+      endpoint: R2_ENDPOINT,
+      region: "auto"
+    )
+  end
+
+  def upload(file, name)
+    s3 = s3_client
+    resp = ""
+
+    File.open(file, 'rb') do |f|                     # Needs to be something unique to user (i.e. profile_page)
+      resp = s3.put_object(bucket: "amp-songs", key: create_file_path(name), body: f)
+    end
+    resp
+  end
+
+  def create_file_path(name)
+    params[:song][:file_path] = "users/#{current_user.profile_page}/#{name}"
   end
 end
