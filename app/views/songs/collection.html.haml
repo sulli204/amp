@@ -1,2 +1,3 @@
 %h2 #{@user.profile_page}'s Collection
-
+- @songs.each do |song|
+  = render partial: "song", locals: { song: song }
