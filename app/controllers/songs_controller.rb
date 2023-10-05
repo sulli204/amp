@@ -32,6 +32,7 @@ class SongsController < ApplicationController
         render :new
       end
     else
+      flash[:notice] = "There was an error uploading #{params[:song][:name]}. Please try again."
       render :new
     end
   end
