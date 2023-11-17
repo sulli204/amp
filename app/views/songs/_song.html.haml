@@ -1,1 +1,2 @@
-%div= song.name
+%div{data: {controller: "song", "song-id-value": "#{song.id}", "song-path-value": "#{song.file_path}"}}
+  %div.pt-4.pl-8{data: {action: "click->song#play"}} #{song.name}

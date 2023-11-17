@@ -1,6 +1,6 @@
 %div.w-full.bg-blue-400.flex.items-center.py-6
   %div.inline-flex
-    %div.font-sans.ml-10.text-2xl.text-white= link_to "amp", root_path
+    %div.font-sans.ml-10.text-2xl.text-white.whitespace-nowrap= link_to "public music", root_path
   %div.w-full.flex-grow.lg-flex.lg.inset-y-0.right-0
   - if logged_in?
     %div.font-sans.text-l.text-white.mr-8= link_to "Upload", upload_path

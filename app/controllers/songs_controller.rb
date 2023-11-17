@@ -37,13 +37,13 @@ class SongsController < ApplicationController
     end
   end
 
-
   private
   def song_params
     params.require(:song).permit(:file_path, :name, :user_id)
   end
 
   R2_ENDPOINT = "https://#{Rails.application.credentials.dig(:cloudflare, :account_id)}.r2.cloudflarestorage.com".freeze
+  SONGS_BUCKET = 'amp-songs'.freeze
 
   def s3_client
     Aws::S3::Client.new(
@@ -54,12 +54,16 @@ class SongsController < ApplicationController
     )
   end
 
+  def song_path(file)
+    R2_ENDPOINT + "/" + file
+  end
+
   def upload(file, name)
     s3 = s3_client
     resp = ""
 
     File.open(file, 'rb') do |f|                     # Needs to be something unique to user (i.e. profile_page)
-      resp = s3.put_object(bucket: "amp-songs", key: create_file_path(name), body: f)
+      resp = s3.put_object(bucket: SONGS_BUCKET, key: create_file_path(name), body: f)
     end
     resp
   end
