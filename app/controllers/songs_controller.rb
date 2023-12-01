@@ -37,6 +37,10 @@ class SongsController < ApplicationController
     end
   end
 
+  def play
+    current_song = params[:song]
+  end
+
   private
   def song_params
     params.require(:song).permit(:file_path, :name, :user_id)

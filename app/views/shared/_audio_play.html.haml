@@ -4,5 +4,5 @@
   -#   = material_icon.shape(:play_circle).md_48.style('color: white')
   -#   = material_icon.shape(:pause_circle).md_48.style('color: white')
   -#   = material_icon.shape(:skip_next).md_48.style('color: white')
-  %audio{controls: "controls", id: "audio-player"}
+  %audio{controls: "controls", id: "audio-player", src: Rails.application.credentials.dig(:cloudflare, :amp_songs_endpoint)}
 
