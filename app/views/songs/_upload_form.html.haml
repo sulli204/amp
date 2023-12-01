@@ -1,0 +1,20 @@
+%div.w-full.max-w-xs
+  = form_with model: @song, url: upload_path, data: { turbo: false },   class: "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" do |f|
+    - if @song.errors.any?
+      %div
+        %ul
+        - user.errors.full_messages.each do |msg|
+          %li= msg
+    %div.mb-4
+      = f.label :name, class: "block text-gray-700 text-sm font-bold mb-2"
+      = f.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+    %div.mb-4
+      = f.label :file, class: "block text-gray-700 text-sm font-bold mb-2"
+      = f.file_field :file_path, direct_upload: true, class: "appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+      = f.hidden_field :user_id, value: current_user.id
+
+    %div.flex.items-center.justify-between
+      = f.submit "Upload", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+  %p.text-center.text-gray-500.text-xs public music org

@@ -33,6 +33,7 @@ gem "tailwindcss-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+# Storage
 gem "aws-sdk-s3"
 
 # Use Redis adapter to run Action Cable in production
@@ -49,6 +50,9 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
+
+# Icons
+gem 'material_icons', '~> 4.0'
 
 
 # Use Sass to process CSS
