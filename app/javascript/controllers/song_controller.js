@@ -2,9 +2,9 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static values = {
-    id: String,
-    path: String,
-    playbackUrl: String
+    id: String,         // Selected song uuid
+    path: String,       // Song path to r2 bucket
+    playbackUrl: String // r2 publically accessed url
   }
 
   static targets = ["play", "pause"]
@@ -71,7 +71,6 @@ export default class extends Controller {
 
     current_song_play_icon.classList.remove(this.hideClass)
     current_song_pause_icon.classList.add(this.hideClass)
-
     this.start()
   }
 }

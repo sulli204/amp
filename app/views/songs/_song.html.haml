@@ -1,8 +1,8 @@
-%div{data: {controller: "song", "song-id-value": "#{song.id}", "song-path-value": "#{song.file_path}", "song-playback-url-value": "#{Rails.application.credentials.dig(:cloudflare, :amp_songs_endpoint)}", "song_hide_class": "hidden"}}
+%div{ data: { controller: "song", "song-id-value": "#{song.id}", "song-path-value": "#{song.file_path}", "song-playback-url-value": "#{Rails.application.credentials.dig(:cloudflare, :amp_songs_endpoint)}", "song_hide_class": "hidden" }}
   %div.pt-4{ data: {action: "click->song#load"} }
     %div.pl-8.flex.items-center{ id: song.id }
-      %div.cursor-pointer{data: {"song_target": "play"}, id: "#{song.id}-play-icon"}
+      %div.cursor-pointer{ data: {"song_target": "play"}, id: "#{song.id}-play-icon" }
         = material_icon.shape(:play_circle).md_48.style('color: #60A5FA')
-      %div.cursor-pointer.hidden{data: {"song_target": "pause"}, id: "#{song.id}-pause-icon"}
+      %div.cursor-pointer.hidden{ data: { "song_target": "pause" }, id: "#{song.id}-pause-icon" }
         = material_icon.shape(:pause_circle).md_48.style('color: #60A5FA')
       %div.pl-4 #{song.name}
