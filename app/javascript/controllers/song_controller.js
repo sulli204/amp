@@ -2,9 +2,10 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static values = {
-    id: String,         // Selected song uuid
-    path: String,       // Song path to r2 bucket
-    playbackUrl: String // r2 publically accessed url
+    id: String,          // Selected song uuid
+    path: String,        // Song path to r2 bucket
+    playbackUrl: String, // r2 publically accessed url
+    title: String
   }
 
   static targets = ["play", "pause"]
@@ -47,6 +48,7 @@ export default class extends Controller {
     audioPlayer.setAttribute("song", this.idValue)
     audioPlayer.setAttribute("src", this.playbackUrlValue + this.pathValue)
 
+    this.inject_song_info()
     audioPlayer.play()
   }
 
@@ -89,5 +91,10 @@ export default class extends Controller {
     currentSongPlayIcon.classList.remove(this.hideClass)
     currentSongPauseIcon.classList.add(this.hideClass)
     this.start()
+  }
+
+  inject_song_info() {
+    let audioPlaySongInfo = document.getElementById("audio-player-song-title")
+    audioPlaySongInfo.innerText = this.titleValue
   }
 }

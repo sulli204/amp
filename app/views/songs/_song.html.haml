@@ -1,4 +1,4 @@
-%div{ data: { controller: "song", "song-id-value": "#{song.id}", "song-path-value": "#{song.file_path}", "song-playback-url-value": "#{Rails.application.credentials.dig(:cloudflare, :amp_songs_endpoint)}", "song_hide_class": "hidden" }}
+%div{ data: { controller: "song", "song-id-value": "#{song.id}", "song-path-value": "#{song.file_path}", "song-playback-url-value": "#{Rails.application.credentials.dig(:cloudflare, :amp_songs_endpoint)}", "song_hide_class": "hidden", "song-title-value": song.name }}
   %div.pt-4{ data: {action: "click->song#load"} }
     %div.pl-8.flex.items-center{ id: song.id }
       %div.cursor-pointer{ data: {"song_target": "play"}, id: "#{song.id}-play-icon" }
