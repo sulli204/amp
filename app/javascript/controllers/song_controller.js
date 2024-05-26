@@ -34,7 +34,12 @@ export default class extends Controller {
 
   start() {
     let audioPlayer = document.getElementById("audio-player")
-    console.log("Starting song " + this.idValue)
+
+    let audioPlayerPlay = document.getElementById("audio-player-play")
+    let audioPlayerPause = document.getElementById("audio-player-pause")
+
+    audioPlayerPlay.classList.add(this.hideClass)
+    audioPlayerPause.classList.remove(this.hideClass)
 
     this.playTarget.classList.add(this.hideClass)
     this.pauseTarget.classList.remove(this.hideClass)
@@ -48,6 +53,12 @@ export default class extends Controller {
   unpause() {
     let audioPlayer = document.getElementById("audio-player")
 
+    let audioPlayerPlay = document.getElementById("audio-player-play")
+    let audioPlayerPause = document.getElementById("audio-player-pause")
+
+    audioPlayerPlay.classList.add(this.hideClass)
+    audioPlayerPause.classList.remove(this.hideClass)
+
     this.playTarget.classList.add(this.hideClass)
     this.pauseTarget.classList.remove(this.hideClass)
 
@@ -56,6 +67,12 @@ export default class extends Controller {
 
   pause() {
     let audioPlayer = document.getElementById("audio-player")
+
+    let audioPlayerPlay = document.getElementById("audio-player-play")
+    let audioPlayerPause = document.getElementById("audio-player-pause")
+
+    audioPlayerPlay.classList.remove(this.hideClass)
+    audioPlayerPause.classList.add(this.hideClass)
 
     this.playTarget.classList.remove(this.hideClass)
     this.pauseTarget.classList.add(this.hideClass)
@@ -66,11 +83,11 @@ export default class extends Controller {
   swtich_songs(current_song_id) {
     let audioPlayer = document.getElementById("audio-player")
 
-    let current_song_play_icon = document.getElementById(current_song_id + "-play-icon")
-    let current_song_pause_icon = document.getElementById(current_song_id + "-pause-icon")
+    let currentSongPlayIcon = document.getElementById(current_song_id + "-play-icon")
+    let currentSongPauseIcon = document.getElementById(current_song_id + "-pause-icon")
 
-    current_song_play_icon.classList.remove(this.hideClass)
-    current_song_pause_icon.classList.add(this.hideClass)
+    currentSongPlayIcon.classList.remove(this.hideClass)
+    currentSongPauseIcon.classList.add(this.hideClass)
     this.start()
   }
 }

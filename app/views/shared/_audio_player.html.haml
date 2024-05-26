@@ -3,9 +3,9 @@
   %div{ id: "audio-controls" }
     %button{ id: "back" }
       = material_icon.shape(:skip_previous).md_48.style('color: white')
-    %button{ id: "play", data:{ "audio_player_target": "play", action: "click->audio-player#play" }}
+    %button{ id: "audio-player-play", data:{ "audio_player_target": "play", action: "click->audio-player#play" }}
       = material_icon.shape(:play_circle).md_48.style('color: white')
-    %button{ id: "pause", data: { "audio_player_target": "pause", action: "click->audio-player#pause" }}
+    %button.hidden{ id: "audio-player-pause", data: { "audio_player_target": "pause", action: "click->audio-player#pause" }}
       = material_icon.shape(:pause_circle).md_48.style('color: white')
     %button{ id: "next" }
       = material_icon.shape(:skip_next).md_48.style('color: white')
