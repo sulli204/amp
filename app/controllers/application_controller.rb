@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
-  # require 'pry'
   before_action :authorized
   helper_method :current_user
   helper_method :logged_in?
+  helper_method :current_song
 
   def current_user
     User.find_by(id: session[:user_id])
@@ -14,5 +14,9 @@ class ApplicationController < ActionController::Base
 
   def authorized
     redirect_to root_path unless logged_in?
+  end
+
+  def current_song
+    Song.find_by(id: session[:song_id])
   end
 end

@@ -1,10 +1,10 @@
 %div.w-full.bg-blue-400.flex.items-center.py-6
   %div.inline-flex
-    %div.font-sans.ml-10.text-2xl.text-white= link_to "amp!!!", root_path
+    %div.font-sans.ml-10.text-2xl.text-white.whitespace-nowrap= link_to "public music", root_path
   %div.w-full.flex-grow.lg-flex.lg.inset-y-0.right-0
   - if logged_in?
-    %div.font-sans.text-l.text-white.mr-8= link_to "Upload", root_path
-    %div.font-sans.text-l.text-white.mr-8= link_to "#{current_user.username}", root_path
+    %div.font-sans.text-l.text-white.mr-8= link_to "Upload", upload_path
+    %div.font-sans.text-l.text-white.mr-8= link_to "#{current_user.username}", collection_path(current_user.username)
     %div.font-sans.text-l.text-white.mr-8= button_to "Logout", logout_path, method: :delete
   - else
     %div.font-sans.text-l.text-white.mr-8.whitespace-nowrap= link_to "Sign Up", sign_up_path

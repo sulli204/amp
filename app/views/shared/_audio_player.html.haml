@@ -1,0 +1,13 @@
+%div.absolute.bottom-0.w-full.bg-blue-400.flex.items-center.py-5{ data: { controller: "audio-player", "audio_player_hide_class": "hidden" } }
+  %audio{ id: "audio-player"}
+  %div.inline-flex.items-center.ml-16{ id: "audio-controls" }
+    %button{ id: "back" }
+      = material_icon.shape(:skip_previous).md_48.style('color: white')
+    %button{ id: "audio-player-play", data:{ "audio_player_target": "play", action: "click->audio-player#play" }}
+      = material_icon.shape(:play_circle).md_48.style('color: white')
+    %button.hidden{ id: "audio-player-pause", data: { "audio_player_target": "pause", action: "click->audio-player#pause" }}
+      = material_icon.shape(:pause_circle).md_48.style('color: white')
+    %button{ id: "next" }
+      = material_icon.shape(:skip_next).md_48.style('color: white')
+    %p.ml-8.text-white.text-xl{ id: "audio-player-song-title" }
+

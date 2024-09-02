@@ -8,4 +8,12 @@ Rails.application.routes.draw do
 
   get "sign_up", to: "users#new"
   post "sign_up", to: "users#create"
+
+  get "upload", to: "songs#new"
+  post "upload", to: "songs#create"
+  get "songs", to: "songs#index"
+  get "songs/:id", to: "songs#play", as: "play_song"
+  get "collection/:profile_page", to: "songs#collection", as: "collection"
+
+  get "audio_player", to: "audio_player#index", as: "audio_player"
 end
