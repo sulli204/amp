@@ -26,6 +26,10 @@ FROM base as build
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential libpq-dev
 
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y git
+
 # Install application gems
 COPY --link Gemfile Gemfile.lock ./
 RUN bundle install && \
