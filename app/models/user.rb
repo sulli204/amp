@@ -6,4 +6,6 @@ class User < ApplicationRecord
                     uniqueness: true,
                     format: { with: VALID_EMAIL_REGEX }
 
+  validates :profile_page, uniqueness: true
+
 end

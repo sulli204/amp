@@ -1,6 +1,8 @@
+-# locals: (path:, user:)
+
 %div.w-full.max-w-xs
-  = form_with model: @user, url: sign_up_path, data: { turbo: false },   class: "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" do |f|
-    - if @user.errors.any?
+  = form_with model: user, url: path, data: { turbo: false }, class: "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" do |f|
+    - if user.errors.any?
       %div
         %ul
         - user.errors.full_messages.each do |msg|
@@ -15,11 +17,19 @@
       = f.label :email, class: "block text-gray-700 text-sm font-bold mb-2"
       = f.text_field :email, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
     %div.mb-6
+      = f.label :profile_page, class: "block text-gray-700 text-sm font-bold mb-2"
+      = f.text_field :profile_page, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+    %div.mb-6
       = f.label :password, class: "block text-gray-700 text-sm font-bold mb-2"
       = f.password_field :password, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
     %div.mb-6
       = f.label :password_confirmation, class: "block text-gray-700 text-sm font-bold mb-2"
       = f.password_field :password_confirmation, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
     %div.flex.items-center.justify-between
-      = f.submit "Sign Up", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-  %p.text-center.text-gray-500.text-xs amp
+      - if user.new_record?
+        = f.submit "Sign Up", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      - else
+        = f.submit "Confirm Changes", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded focus:outline-none focus:shadow-outline"
+        = link_to "Cancel", user, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 hover:bg-gray-300 inline-block font-medium"
+
+  %p.text-center.text-gray-500.text-xs public music dot org
