@@ -2,29 +2,54 @@
 
 %div.w-full.max-w-xs
   = form_with model: user, url: path, data: { turbo: false }, class: "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" do |f|
-    - if user.errors.any?
-      %div
-        %ul
-        - user.errors.full_messages.each do |msg|
-          %li= msg
     %div.mb-4
       = f.label :name, class: "block text-gray-700 text-sm font-bold mb-2"
-      = f.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      - if user.errors.messages[:name].any?
+        = f.text_field :name, class: "shadow appearance-none appearance-none border-2 border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        %div.text-red-500.bold= user.errors.messages[:name].first
+      - else
+        = f.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
     %div.mb-6
       = f.label :username, class: "block text-gray-700 text-sm font-bold mb-2"
-      = f.text_field :username, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      - if user.errors.messages[:username].any?
+        = f.text_field :username, class: "shadow appearance-none appearance-none border-2 border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        %div.text-red-400= user.errors.messages[:username].first
+      - else
+        = f.text_field :username, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
     %div.mb-6
       = f.label :email, class: "block text-gray-700 text-sm font-bold mb-2"
-      = f.text_field :email, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      - if user.errors.messages[:email].any?
+        = f.text_field :email, class: "shadow appearance-none border-2 border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        %div.text-red-400= user.errors.messages[:email].first
+      - else
+        = f.text_field :email, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
     %div.mb-6
       = f.label :profile_page, class: "block text-gray-700 text-sm font-bold mb-2"
-      = f.text_field :profile_page, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      - if user.errors.messages[:profile_page].any?
+        = f.text_field :profile_page, class: "shadow appearance-none border-2 border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        %div.text-red-400= user.errors.messages[:profile_page].first
+      - else
+        = f.text_field :profile_page, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
     %div.mb-6
       = f.label :password, class: "block text-gray-700 text-sm font-bold mb-2"
-      = f.password_field :password, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      - if user.errors.messages[:password].any?
+        = f.text_field :password, class: "shadow appearance-none border-2 border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        %div.text-red-400= user.errors.messages[:password].first
+      - else
+        = f.text_field :password, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
     %div.mb-6
       = f.label :password_confirmation, class: "block text-gray-700 text-sm font-bold mb-2"
-      = f.password_field :password_confirmation, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      - if user.errors.messages[:password_confirmation].any?
+        = f.text_field :password_confirmation, class: "shadow appearance-none border-2 border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        %div.text-red-400= user.errors.messages[:password_confirmation].first
+      - else
+        = f.text_field :password_confirmation, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
     %div.flex.items-center.justify-between
       - if user.new_record?
         = f.submit "Sign Up", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
