@@ -4,7 +4,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.2.2"
 
 gem "rails", github: "rails/rails", branch: "main"
-# gem 'rails', '~> 7.0', '>= 7.0.6'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -60,6 +59,10 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+
+  gem 'amazing_print', '~> 1.6'
+  gem 'active_record_query_trace', '~> 1.8', '>= 1.8.2'
+
   gem 'pry', '~> 0.14.2'
   gem 'pry-nav'
 end
@@ -69,7 +72,7 @@ group :development do
   gem "web-console"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  # gem "rack-mini-profiler"
+  gem "rack-mini-profiler"
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
