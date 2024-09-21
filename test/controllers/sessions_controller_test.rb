@@ -16,15 +16,16 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     user_params = {
       user: {
         name: "New User",
-        email: "newuser@amp.com",
+        email: "newuser@pubmus.com",
         username: "newuser",
+        profile_page: "new_user",
         password: "password",
         password_confirmation: "password"
       }
     }
 
     auth_params = {
-      email: "newuser@amp.com",
+      email: "newuser@pubmus.com",
       password: "password"
     }
 

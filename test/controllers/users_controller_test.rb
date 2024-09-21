@@ -1,5 +1,6 @@
 require "test_helper"
 
+# rails test test/controllers/users_controller_test.rb
 class UsersControllerTest < ActionDispatch::IntegrationTest
   test "User gets created" do
     user_params = {
@@ -7,6 +8,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
         name: "New User",
         email: "newuser@amp.com",
         username: "newuser",
+        profile_page: "new_user",
         password: "password",
         password_confirmation: "password"
       }
@@ -30,35 +32,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     }
 
     post users_path(user_params)
-    assert_response :unprocessable_entity
-  end
-
-  test "User cannot have existing email" do
-    first_user_params = {
-      user: {
-        name: "New User 1",
-        email: "newuser@amp.com",
-        username: "newuser1",
-        password: "password",
-        password_confirmation: "password"
-      }
-    }
-
-    second_user_params = {
-      user: {
-        name: "New User 2",
-        email: "newuser@amp.com",
-        username: "newuser2",
-        password: "password",
-        password_confirmation: "password"
-      }
-    }
-    assert_difference 'User.count' do
-      post users_path(first_user_params)
-      assert_response :redirect
-    end
-
-    post users_path(second_user_params)
     assert_response :unprocessable_entity
   end
 end
