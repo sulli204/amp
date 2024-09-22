@@ -1,0 +1,32 @@
+-# %span.dev-widget-bar= "Controller: #{controller_path}##{action_name} | Rails Version: #{Rails::VERSION::STRING} | Ruby Version: #{RUBY_VERSION}"
+#dev-widget-bar
+  %span #{controller_path}##{action_name}
+  %span.join /
+  %span.dev-label Rails Version:
+  %span= Rails::VERSION::STRING
+  %span.join /
+  %span.dev-label Ruby Version:
+  %span= RUBY_VERSION
+
+%style
+  :plain
+    #dev-widget-bar {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      background-color: black;
+      color: #ccc;
+      padding: 4px 10px;
+      font: 14px Lato, sans-serif;
+      cursor: pointer;
+      z-index: 2147483647;
+    }
+
+    #dev-widget-bar .dev-label {
+      color: #999;
+    }
+
+    #dev-widget-bar .join {
+      color: #999;
+      padding: 0 10px;
+    }
