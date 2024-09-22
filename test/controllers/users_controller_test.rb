@@ -34,4 +34,22 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     post users_path(user_params)
     assert_response :unprocessable_entity
   end
+
+  test "users can only edit their page" do
+    user = users(:patsul)
+    edit_user = users(:danny)
+    user.update!(
+      password: "password",
+      password_confirmation: "password"
+    )
+
+    post login_path({
+      email: user.email,
+      password: "password"
+    })
+
+    get edit_user_path(edit_user)
+    assert_redirected_to root_path
+  end
 end
+# rails test test/controllers/users_controller_test.rb
