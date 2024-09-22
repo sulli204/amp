@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   delete "logout", to: "sessions#destroy"
 
   resources :users
+  get "user/:profile_page", to: "users#show"
+
   root "main#index"
 
   get "sign_up", to: "users#new"

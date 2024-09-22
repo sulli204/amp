@@ -13,4 +13,7 @@ class User < ApplicationRecord
   validates :profile_page, presence: true,
                            uniqueness: true
 
+  def to_param
+    profile_page
+  end
 end
