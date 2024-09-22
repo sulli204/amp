@@ -14,9 +14,7 @@
     %main
       %div
         = render "shared/nav"
-        = render "shared/flash"
         = yield
 
         - if Rails.env.development?
           = render "shared/dev_tool"
-

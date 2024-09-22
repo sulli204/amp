@@ -1,9 +1,9 @@
 #dev-widget-bar
   %span #{controller_path}##{action_name}
-  %span.join /
+  %span.join= "|"
   %span.dev-label Rails Version:
   %span= Rails::VERSION::STRING
-  %span.join /
+  %span.join= "|"
   %span.dev-label Ruby Version:
   %span= RUBY_VERSION
 
