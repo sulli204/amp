@@ -38,15 +38,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "users cannot edit other users page" do
     user = users(:patsul)
     edit_user = users(:danny)
-    user.update!(
-      password: "password",
-      password_confirmation: "password"
-    )
-
-    post login_path({
-      email: user.email,
-      password: "password"
-    })
+    login_as(user:)
 
     get edit_user_path(edit_user)
     assert_redirected_to root_path
@@ -54,15 +46,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "users can edit their own page" do
     user = users(:patsul)
-    user.update!(
-      password: "password",
-      password_confirmation: "password"
-    )
-
-    post login_path({
-      email: user.email,
-      password: "password"
-    })
+    login_as(user:)
 
     get edit_user_path(user)
     assert_response :success

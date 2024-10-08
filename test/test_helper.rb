@@ -11,3 +11,14 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
+def login_as(user:)
+  user.update!(
+    password: "password",
+    password_confirmation: "password"
+  )
+  post login_path({
+    email: user.email,
+    password: "password"
+  })
+end
